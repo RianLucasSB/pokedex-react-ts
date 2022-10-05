@@ -1,34 +1,19 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { TPokemon } from '../../types';
 
-type TPokemon = {
-    sprites: {
-        back_default: ''
-    }
-}
+
 
 export const Pokemon = () => {
-    const {pokemonName} = useParams();
-    const [pokemon, setPokemon] = useState<TPokemon>();
+    const location = useLocation();
+    const pokemon: TPokemon  = location.state;
 
-    useEffect(()=> {
-        const getPokemon = async () => {
-            axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then((res) => {
-                setPokemon(res.data)
-            })
-        }
-
-        getPokemon();
-        console.log('useEffect');
-        
-
-    }, [])
+    console.log(pokemon);
     
-
-    return(
+    return (
         <div>
-           <img src={pokemon?.sprites.back_default} alt="" /> 
+            <img src={pokemon?.sprites?.front_default} alt="" />
         </div>
-    )
+)
 }
